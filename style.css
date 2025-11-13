@@ -1,0 +1,491 @@
+/* --- Google Font Import --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+/* --- CSS Variables (Theme Colors) --- */
+:root {
+    --primary-color: #003366; /* Deep Vignan Blue */
+    --secondary-color: #bc31c9; /* Bright Tech Orange */
+    --light-gray: #f4f4f4;
+    --dark-text: #333;
+    --light-text: #fff;
+}
+
+/* --- Global Reset & Body Styling --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: var(--dark-text);
+    line-height: 1.6;
+    background: #fff;
+}
+
+/* --- Animated Gradient Background (for hero/special sections) --- */
+.animated-gradient-bg {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--primary-color));
+    background-size: 400% 400%;
+    animation: gradientShift 10s ease infinite;
+}
+@keyframes gradientShift {
+    0% { background-position: 0% 25%; }
+    50% { background-position: 25% 50%; }
+    100% { background-position: 100% 0%; }
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* --- Main Navigation Bar --- */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 1rem 2rem;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.navbar .logo span {
+    color: var(--secondary-color);
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin-left: 1.5rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--dark-text);
+    font-weight: 600;
+    padding: 0.5rem;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 3px;
+    background: var(--secondary-color);
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+    color: var(--primary-color);
+}
+
+.nav-links a:hover::after,
+.nav-links a.active::after {
+    width: 100%;
+}
+
+.nav-links a.login-btn {
+    background: var(--secondary-color);
+    color: var(--light-text);
+    border-radius: 20px;
+    padding: 0.5rem 1rem;
+}
+
+.nav-links a.login-btn:hover {
+    background: var(--primary-color);
+    color: var(--light-text);
+}
+
+.nav-links a.login-btn::after {
+    display: none; /* No underline for button */
+}
+
+/* --- General Page Container --- */
+.container {
+    max-width: 100vw;
+    margin: 2rem ;
+    padding: 2rem;
+}
+
+h1, h2, h3 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+/* ====== Home Section ====== */
+.home {
+  position: relative;
+  height: 100vh;
+  background: url("campus.png") no-repeat center center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Dark overlay for readability */
+.home .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+
+/* Text content */
+.home .content {
+  position: relative;
+  z-index: 2;
+  max-width: 90%;
+  padding: 20px;
+}
+
+/* Make heading horizontal and clear */
+.home h1 {
+  color: #fff; /* pure white text */
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  white-space: nowrap; /* prevents text from wrapping */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+}
+
+/* Subtitle */
+.home p {
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  color: #f5f5f5;
+}
+
+/* Button styling */
+.home .btn {
+  background-color: #1e88e5;
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 6px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.home .btn:hover {
+  background-color: #1565c0;
+  transform: scale(1.05);
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .home h1 {
+    font-size: 1.4rem;
+    white-space: normal; /* allow wrapping on small screens */
+  }
+  .home p {
+    font-size: 1rem;
+  }
+  .home .btn {
+    padding: 10px 22px;
+    font-size: 0.9rem;
+  }
+}
+
+
+/* --- About Us Page (about.html) --- */
+.about-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+}
+
+.about-content img {
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    background-color: #003366;
+}
+
+/* --- Contact Page (contact.html) --- */
+.contact-form {
+    background: var(--light-gray);
+    padding: 2rem;
+    border-radius: 10px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+.submit-btn {
+    display: inline-block;
+    background: var(--primary-color);
+    color: var(--light-text);
+    padding: 0.8rem 2rem;
+    border: none;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.submit-btn:hover {
+    background: var(--secondary-color);
+}
+
+/* --- Login Page (login.html) --- */
+.login-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-size: 400% 400%;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color), var(--primary-color));
+}
+
+.login-container {
+    background: #ffffff;
+    padding: 3rem;
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+}
+
+.login-container h1 {
+    margin-bottom: 2rem;
+}
+
+.login-container .submit-btn {
+    width: 100%;
+}
+
+.login-container .extra-links {
+    margin-top: 1.5rem;
+}
+
+.login-container .extra-links a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.login-container .extra-links a:hover {
+    text-decoration: underline;
+}
+
+/* --- Footer --- */
+.footer {
+    text-align: center;
+    padding: 2rem;
+    background: var(--dark-text);
+    color: var(--light-gray);
+    margin-top: 2rem;
+}
+
+/* --- Mobile "Hamburger" Menu Styles --- */
+.menu-toggle {
+    display: none; /* Hidden by default on desktop */
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 101;
+}
+
+.menu-toggle .bar {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background: var(--primary-color);
+    border-radius: 3px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Hamburger to 'X' animation */
+.menu-toggle.active .bar:nth-child(1) {
+    transform: rotate(45deg) translate(7px, 7px);
+}
+.menu-toggle.active .bar:nth-child(2) {
+    opacity: 0;
+}
+.menu-toggle.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(7px, -7px);
+}
+
+/* --- Card Styles for Academics/Programs --- */
+.card-container {
+    max-width: 1300px;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+.program-card {
+    min-width: 600px;
+    padding: 2rem;
+    border-radius: var(--radius);
+    background: #f1f1f1;
+    box-shadow: var(--shadow-1);
+    border-radius: 40px;
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+}
+
+/* Alternating layout */
+.program-card:nth-child(odd) {
+    align-self: flex-start;
+    transform: translateX(-20px);
+    opacity: 0;
+}
+
+.program-card:nth-child(even) {
+    align-self: flex-end;
+    transform: translateX(20px);
+    opacity: 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .program-card {
+        max-width: 100%;
+        margin: 0 1rem;
+    }
+    
+    .program-card:nth-child(odd),
+    .program-card:nth-child(even) {
+        align-self: center;
+        transform: translateY(20px);
+    }
+    
+    .program-card.show {
+        transform: translateY(0);
+    }
+}
+
+/* --- Admissions Page Styles --- */
+.admissions-content,
+.container.admissions-content {
+    max-width: 900px;
+    padding: 2.5rem;
+    font-size: 1.5rem;
+    line-height: 1.8;
+}
+
+.admissions-content h1,
+.admissions-content h2,
+.admissions-content h3,
+.container.admissions-content h1,
+.container.admissions-content h2,
+.container.admissions-content h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.admissions-content p,
+.container.admissions-content p {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+}
+
+body.admissions {
+    font-size: 100%;
+}
+section h2 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #222;
+}
+
+section p {
+  font-size: 18px;
+  line-height: 1.6;
+}
+    
+/* --- Page Transition Styles --- */
+.page-transition {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #fff;
+    z-index: 9999;
+    opacity: 1;
+    pointer-events: all;
+    transition: opacity 0.4s ease;
+}
+
+.page-transition.hide {
+    opacity: 0;
+    pointer-events: none;
+}

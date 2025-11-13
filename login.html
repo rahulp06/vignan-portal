@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="login-body">
+        <div class="login-container">
+            <h1>Student Portal Login</h1>
+
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email" required />
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" required />
+                </div>
+
+                <button type="submit" class="submit-btn">Login</button>
+            </form>
+
+            <div class="extra-links">
+                <a href="register.html">Create an Account</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase Login -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword }
+        from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDRFRUtiAQSE_18I84UBofS3h0IPm7F4NY",
+            authDomain: "vignan-portal-e2e58.firebaseapp.com",
+            projectId: "vignan-portal-e2e58",
+            storageBucket: "vignan-portal-e2e58.firebasestorage.app",
+            messagingSenderId: "348890864571",
+            appId: "1:348890864571:web:f08b8fd6bc9d54e85d429e",
+            measurementId: "G-VCVCVBXT47"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+
+        document.getElementById("loginForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById("email").value;
+            const password = document.getElementById("password").value;
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                alert("Login successful!");
+                window.location.href = "index.html";
+
+            } catch (err) {
+                alert("Login failed: " + err.message);
+            }
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | Contact Messages</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .admin-container {
+            width: 90%;
+            margin: 40px auto;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #ffffff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 14px;
+            border-bottom: 1px solid #ddd;
+            font-size: 15px;
+        }
+        th { background: #003366; color: white; }
+        tr:hover { background: #f5f5f5; }
+        .btn-delete {
+            background: #e63946;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-read {
+            background: #2a9d8f;
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <nav class="navbar">
+        <a href="index.html" class="logo">VGNT<span>.</span></a>
+        <ul class="nav-links">
+            <li><a href="admin-messages.html" class="active">Messages</a></li>
+            <li><a href="index.html">Back to Site</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="admin-container">
+    <h1>Admin – Contact Messages</h1>
+    <p>All user queries submitted through the contact form.</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Subject</th>
+                <th>Message</th>
+                <th>Received At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="messagesTable"></tbody>
+    </table>
+</main>
+
+<footer class="footer">
+    <p>&copy; 2025 VIGNAN Institute of Technology and Science. All Rights Reserved.</p>
+</footer>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { 
+        getFirestore, collection, getDocs, doc, deleteDoc, updateDoc, getDoc
+    } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+    import { getAuth, onAuthStateChanged } 
+    from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDRFRUtiAQSE_18I84UBofS3h0IPm7F4NY",
+        authDomain: "vignan-portal-e2e58.firebaseapp.com",
+        projectId: "vignan-portal-e2e58",
+        storageBucket: "vignan-portal-e2e58.firebasestorage.app",
+        messagingSenderId: "348890864571",
+        appId: "1:348890864571:web:f08b8fd6bc9d54e85d429e",
+        measurementId: "G-VCVCVBXT47"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const auth = getAuth(app);
+
+    // 🔒 ADMIN PROTECTION
+    onAuthStateChanged(auth, async (user) => {
+        if (!user) {
+            window.location.href = "admin-login.html";
+            return;
+        }
+
+        const userRef = doc(db, "users", user.uid);
+        const snap = await getDoc(userRef);
+
+        if (!snap.exists() || snap.data().role !== "admin") {
+            alert("Access Denied: Admins only");
+            window.location.href = "index.html";
+            return;
+        }
+    });
+
+    // LOAD MESSAGES
+    async function loadMessages() {
+        const table = document.getElementById("messagesTable");
+        table.innerHTML = "";
+
+        const snapshot = await getDocs(collection(db, "contact_messages"));
+
+        snapshot.forEach((docItem) => {
+            const data = docItem.data();
+
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td>${data.name}</td>
+                <td>${data.email}</td>
+                <td>${data.subject}</td>
+                <td>${data.message}</td>
+                <td>${data.timestamp?.toDate().toLocaleString() || "—"}</td>
+                <td>
+                    <button class="btn-read" onclick="markAsRead('${docItem.id}')">Mark Read</button>
+                    <button class="btn-delete" onclick="deleteMessage('${docItem.id}')">Delete</button>
+                </td>
+            `;
+            table.appendChild(tr);
+        });
+    }
+
+    // DELETE
+    window.deleteMessage = async function (id) {
+        if (confirm("Delete this message?")) {
+            await deleteDoc(doc(db, "contact_messages", id));
+            loadMessages();
+        }
+    };
+
+    // MARK READ
+    window.markAsRead = async function (id) {
+        await updateDoc(doc(db, "contact_messages", id), { read: true });
+        alert("Marked as read");
+    };
+
+    loadMessages();
+</script>
+
+</body>
+</html>

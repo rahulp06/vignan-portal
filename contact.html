@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Vignan Institute of Technology and Science</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar">
+            <a href="index.html" class="logo">VGNT<span>.</span></a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="programs.html">Programs</a></li>
+                <li><a href="academics.html">Academics</a></li>
+                <li><a href="admissions.html">Admissions</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
+                <li><a href="login.html" class="login-btn">Login</a></li>
+            </ul>
+            <button class="menu-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </nav>
+    </header>
+
+<main class="container">
+  <h1>Get in Touch</h1>
+  <p>We'd love to hear from you. Please fill out the form below or reach out to us through our contact details.</p>
+
+  <!-- Contact Form -->
+  <form id="contactForm" class="contact-form">
+      <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" name="name" required>
+      </div>
+      <div class="form-group">
+          <label for="email">Email Address</label>
+          <input type="email" id="email" name="email" required>
+      </div>
+      <div class="form-group">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" name="subject" required>
+      </div>
+      <div class="form-group">
+          <label for="message">Your Message</label>
+          <textarea id="message" name="message" required></textarea>
+      </div>
+      <button type="submit" class="submit-btn">Send Message</button>
+  </form>
+
+  <!-- Google Map Section -->
+  <section class="map-section">
+      <h2>Our Location</h2>
+      <iframe 
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d4805.125581342646!2d78.71929847599665!3d17.344631804033742!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb0b34520e1c4f%3A0xdff09e04f19241ea!2sVignan%20Institute%20of%20Technology%20and%20Science!5e1!3m2!1sen!2sin!4v1762367089520!5m2!1sen!2sin"
+        width="600"
+        height="450"
+        style="border:0; border-radius:10px; margin-top:2rem;"
+        allowfullscreen
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+  </section>
+</main>
+
+<footer class="footer">
+    <p>&copy; 2025 VIGNAN Institute of Technology and Science. All Rights Reserved.</p>
+</footer>
+
+<script src="script.js"></script>
+
+<!-- ⭐ Firebase Contact Form Script -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp }
+    from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyDRFRUtiAQSE_18I84UBofS3h0IPm7F4NY",
+        authDomain: "vignan-portal-e2e58.firebaseapp.com",
+        projectId: "vignan-portal-e2e58",
+        storageBucket: "vignan-portal-e2e58.firebasestorage.app",
+        messagingSenderId: "348890864571",
+        appId: "1:348890864571:web:f08b8fd6bc9d54e85d429e",
+        measurementId: "G-VCVCVBXT47"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    document.getElementById("contactForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const subject = document.getElementById("subject").value;
+        const message = document.getElementById("message").value;
+
+        try {
+            await addDoc(collection(db, "contact_messages"), {
+                name,
+                email,
+                subject,
+                message,
+                timestamp: serverTimestamp()
+            });
+
+            alert("Message sent successfully!");
+            document.getElementById("contactForm").reset();
+
+        } catch (err) {
+            alert("Error sending message: " + err.message);
+        }
+    });
+</script>
+
+</body>
+</html>
